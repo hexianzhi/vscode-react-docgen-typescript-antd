@@ -4,9 +4,9 @@ import { Options } from "../types";
 
 export async function reactDocgen(file: vscode.Uri, options: Options) {
   const filterNodeModules = vscode.workspace.getConfiguration('vscode-react-docgen-typescript').get<boolean>('filterNodeModules');
-
-  let componentDocs = docgen.parse(file.path, {
-    savePropValueAsString: true,
+  const isDarwin = process.platform === 'darwin';
+  let componentDocs = docgen.parse(isDarwin ? file.path :  file.fsPath, {
+    // savePropValueAsString: true,
     shouldExtractValuesFromUnion: true,
     propFilter: filterNodeModules ? (prop) => {
       if (prop.parent) {
@@ -16,10 +16,12 @@ export async function reactDocgen(file: vscode.Uri, options: Options) {
       return true;
     }: undefined,
   });
+ 
   if (options.all || componentDocs.length <= 1) {
     return componentDocs;
   }
-
+ 
+  // ?
   const components = await vscode.window.showQuickPick(componentDocs.map(vo => ({
     label: vo.displayName,
     description: vo.description,

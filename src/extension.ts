@@ -20,12 +20,12 @@ export function activate(context: vscode.ExtensionContext) {
   // The commandId parameter must match the command field in package.json
 
   const insertAllReactDocCmd = vscode.commands.registerTextEditorCommand('vscode-react-docgen-typescript.insertAllReactDoc', (textEditor) => insertReactDoc(textEditor, { all: true }));
-  const insertReactDocCmd = vscode.commands.registerTextEditorCommand('vscode-react-docgen-typescript.insertReactDoc', (textEditor) => insertReactDoc(textEditor, { all: false }));
+  // const insertReactDocCmd = vscode.commands.registerTextEditorCommand('vscode-react-docgen-typescript.insertReactDoc', (textEditor) => insertReactDoc(textEditor, { all: false }));
   const copyAllReactDocCmd = vscode.commands.registerCommand('vscode-react-docgen-typescript.copyAllReactDoc', (fileUri: vscode.Uri) => copyReactDoc(fileUri, {all: true}));
 
 	context.subscriptions.push(
     insertAllReactDocCmd,
-    insertReactDocCmd,
+    // insertReactDocCmd,
     copyAllReactDocCmd,
   );
 }
